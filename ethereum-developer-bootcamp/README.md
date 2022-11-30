@@ -2,4 +2,4 @@
 
 ## Content
 
-1. [Blockchain and Crypto](./blockchain-crypto)
+1. [Blockchain and Crypto](./blockchain-crypto.md)
