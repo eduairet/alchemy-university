@@ -76,7 +76,30 @@ function getAddress(publicKey) {
 
 1.  [Crypto: How the Code Rebels Beat the Government Saving Privacy in the Digital Age by Steven Levy](https://www.amazon.com/Crypto-Rebels-Government-Privacy-Digital/dp/0140244328)
 2.  [ECDSA: The digital signature algorithm of a better internet by Nick Sullivan](https://blog.cloudflare.com/ecdsa-the-digital-signature-algorithm-of-a-better-internet/)
+    -   NOTES:
+        -   HTTPS: The browser connects to that site over encrypted connection using public key cryptography and a digital certificate
+            -   Thanks to TLS web certificates support different public key algorithms
+            -   Most websites use RSA for legacy reasons
+        -   RSA
+            -   Public key: is a large number product of two primes plus a smaller number
+            -   Private key
+                -   Related number
+                -   Used to create a digital signature
+        -   ECC
+            -   Public key:
+                -   Equation for an elliptic curve and a point that lies on that curve
+            -   The private key is a number
+        -   ECDSA (Elliptic Curve Digital Signature Algorithm)
+            -   Not widespread use in the internet but are the base of Blockchain cryptography
+        -   With ECDSA you can get the same security as with RSA but with smaller keys
+            -   Smaller keys are faster to compute
+            -   If the private key is leaked the data associated to the owner will be compromised
 3.  [ECDSA in Wikipedia](https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm)
+    -   NOTES:
+        -   Key and signature size ECDS:
+            -   Private key -> 160 bits
+            -   Signature -> 4t bits (320 bits for a security level of 80 bits)
+        -   Bad implementation of the algorithm can compromise the data like Play Station signing in 2010 or the Java SecureRandom class that allowed hackers steal bitcoin keys
 4.  [ECDSA in Practical Cryptography for Developers](https://cryptobook.nakov.com/digital-signatures/ecdsa-sign-verify-messages)
 5.  [secp256k1](https://en.bitcoin.it/wiki/Secp256k1)
 6.  [How Bitcoin derives addresses](https://en.bitcoin.it/wiki/Address)
@@ -86,9 +109,7 @@ function getAddress(publicKey) {
 10. [Secret Key Exchange by Computerphile](https://www.youtube.com/watch?v=NmM9HA2MQGI)
 11. [Diffie Hellman by Computerphile](https://www.youtube.com/watch?v=Yjrfm_oRO0w)
 12. [Elliptic Curves by Computerphile](https://www.youtube.com/watch?v=NF1pwjL9-DE)
-
 13. [RSA in Wikipedia](<https://en.wikipedia.org/wiki/RSA_(cryptosystem)>)
 14. [RSA in Practical Cryptography for Developers](https://cryptobook.nakov.com/digital-signatures/rsa-signatures)
-
 15. RSA by Eddie Woo, [part 1](https://www.youtube.com/watch?v=4zahvcJ9glg), [part 2](https://www.youtube.com/watch?v=oOcTVTpUsPQ)
 16. [RSA Backdoor](https://www.reuters.com/article/us-usa-security-nsa-rsa/exclusive-nsa-infiltrated-rsa-security-more-deeply-than-thought-study-idUSBREA2U0TY20140331)
