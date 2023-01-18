@@ -216,5 +216,5 @@ function getAddress(publicKey) {
 14. [RSA in Practical Cryptography for Developers](https://cryptobook.nakov.com/digital-signatures/rsa-signatures)
     -   Easier to digest content, practical for apply into a project
 15. RSA by Eddie Woo, [part 1](https://www.youtube.com/watch?v=4zahvcJ9glg), [part 2](https://www.youtube.com/watch?v=oOcTVTpUsPQ)
-    -   The best ans simplest way to understand it
+    -   The best and simplest way to understand it
 16. [RSA Backdoor](https://www.reuters.com/article/us-usa-security-nsa-rsa/exclusive-nsa-infiltrated-rsa-security-more-deeply-than-thought-study-idUSBREA2U0TY20140331)
