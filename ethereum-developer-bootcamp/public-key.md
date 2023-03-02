@@ -57,7 +57,7 @@ async function recoverKey(message, signature, recoveryBit) {
 }
 ```
 
-## Ethereum Address
+## Ethereum Address
 
 An Ethereum address is the last 20 bytes of the hash of the public key, and you can always get the address from the public key.
 
