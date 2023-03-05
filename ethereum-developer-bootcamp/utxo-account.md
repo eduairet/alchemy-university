@@ -4,7 +4,7 @@
 
 -   Sender, Amount, Recipient, and a collision resistant authentication like asymmetric cryptography signatures
 
-## UTXOs
+## UTXOs
 
 -   Bitcoin uses UTXOs (Unspent Transaction Outputs)
 -   All coins are not the same, which prevents double spend
