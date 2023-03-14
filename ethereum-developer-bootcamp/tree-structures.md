@@ -37,6 +37,7 @@
 
 ```JS
 // Node
+
 class Node {
     constructor(data) {
         this.data = data;
@@ -51,7 +52,8 @@ module.exports = Node;
 #### Tree
 
 ```JS
-// Tree
+// Simple tree example
+
 class Tree {
     constructor() {
         // Started without root
@@ -111,3 +113,45 @@ module.exports = Tree;
 -   With larger trees, the average case for verification of tree is `log2(n)` where `n` is the `number of nodes` in the tree
     -   For a tree of size 128, it would take only 7 hashes to determine the root
 -   Storing transactions as Merkle Trees allows us to look at a block and verify that a transaction was part of it by only having part of the data set
+
+```JS
+// Merkle Tree example
+
+class MerkleTree {
+    constructor(leaves, concat) {
+        // An array of leaf nodes
+        this.leaves = leaves;
+        // This function joins 2 nodes
+        this.concat = concat;
+    }
+    getRoot() {
+        // Base cases
+        if (!this.leaves.length)
+            return null;      
+        if (this.leaves.length === 1)
+            return this.leaves[0];
+        // Consume a larger array
+        return this.recursiveGet([...this.leaves]);
+    }
+    recursiveGet(leaves) {
+        // Minimum case of large array
+        if (leaves.length === 2)
+            return this.concat(...leaves);
+        // Larger arrays consumed with recursion
+        if(leaves.length > 2) {
+            // Divide by half
+            const half = Math.ceil(leaves.length / 2);
+            const [left, right] = [
+                leaves.slice(0, half), leaves.slice(half)
+            ];
+            // Consume
+            return this.concat(
+                this.recursiveGet(left),
+                this.recursiveGet(right)
+            );
+        }
+    }
+}
+
+module.exports = MerkleTree;
+```
