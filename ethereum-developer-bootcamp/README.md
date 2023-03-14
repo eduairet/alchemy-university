@@ -7,3 +7,4 @@
 3. [Proof of Work](./proof-of-work.md)
 4. [Blockchain Network](./blockchain-network.md)
 5. [UTXO & Account Based Model](./utxo-account.md)
+6. [Tree Data Structures](./tree-structures.md)

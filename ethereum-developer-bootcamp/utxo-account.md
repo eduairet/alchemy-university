@@ -83,3 +83,42 @@ module.exports = Transaction;
 -   Tx is valid if the amount is less than the account balance
 -   Transactions change the state of an account
 -   There’s a nonce to prevent replay attacks
+
+## Further reading on UTXOs
+
+-   [Bitcoin genesis block](https://www.blockchain.com/explorer/blocks/btc/0)
+    -   UTXO never spent
+    -   Its tx hash has two extra leading zeroes
+    -   It’s coinbase has the hash of the text: The Times 03/Jan/2009 Chancellor on brink of second bailout for banks
+    -   50BTC reward sent to an unknown address
+    -   Its timestamp is tricky since doesn’t match the 10 minutes block mining time
+-   [Genesis block details](https://en.bitcoin.it/wiki/Genesis_block)
+    -   First block of a blockchain
+    -   Block 0 now, previously Block 1
+    -   Almost always hardcoded
+    -   Doesn’t reference a previous block
+    -   It cannot be spent like in bitcoin
+    -   The `scriptPubKey` is called the ‘Witness Script’ or ‘Locking Script’
+    -   Each ‘Locking Script’ has an ‘Unlocking Script’ that allows the UTXO to be spent
+    -   The unlock needs a signature that verifies the owner and prevents double spend
+-   [Bitcoin Script Language](https://en.bitcoin.it/wiki/Script)
+    -   Not turing complete, no loops
+    -   Processed left to right
+    -   Simple, prevents no denial or service attacks
+    -   A list of function-like operation codes
+    -   Takes a number from the stack of codes and operates with them
+    -   Basically it transfers BTC from one person to other
+        -   Spender must provide a public key
+        -   And a signature to prove ownership
+    -   With scripting the requirements for a transaction can be changed, it can have an order to not require private keys for example
+    -   When scripting is important to check the OP-Codes from documentation and examples
+-   [Script](https://bitcoin.stackexchange.com/questions/29754/history-behind-the-scripting-language-in-bitcoin/29763#29763)
+    -   Probably created after the whole bitcoin idea, it wasn’t even properly tested by Satoshi
+    -   An example is the `OP_RETURN` bug that allowed the sender to end the script early instead of making a fail tx which allowed the sender to steal money from other users, this bug was fixed by Satoshi in production
+    -   Reads all the Op-Codes until finishes every script
+-   [JavaScript implementation of Script](https://github.com/charliermarsh/script)
+-   [Pay-to-Pubkey Hash](https://en.bitcoin.it/wiki/Transaction#Pay-to-PubkeyHash)
+    -   The bitcoin can only be spent by the owner of the private key corresponding to the public key provided in the script.
+-   [Pay-to-Script Hash](https://en.bitcoin.it/wiki/Pay_to_script_hash)
+    -   They allow transactions to be sent to a script hash (address starting with 3) instead of a public key hash (addresses starting with 1)
+    -   They are flexible since the spend requirements are defined by the script
