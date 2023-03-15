@@ -124,30 +124,48 @@ class MerkleTree {
         // This function joins 2 nodes
         this.concat = concat;
     }
+    /**
+     * Returns the root of the Merkle tree
+     */
     getRoot() {
         // Base cases
         if (!this.leaves.length)
-            return null;      
+            return null;
         if (this.leaves.length === 1)
             return this.leaves[0];
         // Consume a larger array
         return this.recursiveGet([...this.leaves]);
     }
+    /**
+     * Returns the root of the Merkle tree recursively
+     */
     recursiveGet(leaves) {
+        const { length } = leaves;
+        if (length === 1) return leaves[0];
         // Minimum case of large array
-        if (leaves.length === 2)
-            return this.concat(...leaves);
+        if (length === 2) return this.concat(...leaves);
         // Larger arrays consumed with recursion
-        if(leaves.length > 2) {
+        if (length > 2) {
             // Divide by half
-            const half = Math.ceil(leaves.length / 2);
-            const [left, right] = [
-                leaves.slice(0, half), leaves.slice(half)
-            ];
-            // Consume
+            const half = Math.ceil(length / 2);
+            const [left, right] = [leaves.slice(0, half), leaves.slice(half)];
+            // Exceptions
+            if (left.length % 2 !== 0) right.unshift(left.pop());
+            if (left.length === 2 && right.length === 3) {
+                const [a, b, c] = right
+                return this.concat(
+                    this.concat(
+                        this.concat(...left), this.concat(a, b)
+                    ),
+                    c
+                )
+            }
+            // Default behavior
             return this.concat(
                 this.recursiveGet(left),
-                this.recursiveGet(right)
+                right.length === 1
+                    ? right[0]
+                    : this.recursiveGet(right)
             );
         }
     }
