@@ -31,7 +31,9 @@
 -   Good for searching and sorting data
 -   It’s also good for algorithm design, recursion works well with them
 
-### Examples
+## Examples
+
+### Binary Tree
 
 #### Node
 
@@ -100,7 +102,7 @@ class Tree {
 module.exports = Tree;
 ```
 
-## Merkle Tree
+### Merkle Binary Tree
 
 -   It's a data structure that allows to make verifications to data that belongs to a large set of data.
 
@@ -113,6 +115,8 @@ module.exports = Tree;
 -   With larger trees, the average case for verification of tree is `log2(n)` where `n` is the `number of nodes` in the tree
     -   For a tree of size 128, it would take only 7 hashes to determine the root
 -   Storing transactions as Merkle Trees allows us to look at a block and verify that a transaction was part of it by only having part of the data set
+
+#### Tree
 
 ```JS
 // Merkle Tree example
@@ -171,7 +175,7 @@ class MerkleTree {
     }
     /**
      * Get the proof of existence
-    */
+     */
     getProof(index, layer = this.leaves, proof = []) {
         // Base case: Layer has just one element
         if (layer.length === 1) return proof;
@@ -200,4 +204,31 @@ class MerkleTree {
 }
 
 module.exports = MerkleTree;
+```
+
+#### Verify Proof
+
+```JS
+function verifyProof(proof, node, root, concat) {
+    // Initialize the root with the node
+    let testRoot = node;
+    // Hash node with every element
+    while (proof.length) {
+        // Save the left and right elements
+        const [left, right] = [
+            proof[0].left ? proof[0].data : testRoot,
+            proof[0].left ? testRoot : proof[0].data
+        ];
+        // Concatenate the pair of elements
+        // and assign them to the testRoot
+        testRoot = concat(left, right);
+        // Remove the first element of the proof
+        // to continue with the next one
+        proof.shift();
+    }
+    // Compare the root and the test root
+    return root === testRoot;
+}
+
+module.exports = verifyProof;
 ```
