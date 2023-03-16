@@ -1,6 +1,6 @@
 # Ethereum Developer Bootcamp
 
-## Content
+## Content [^1]
 
 1. [Blockchain and Crypto](./blockchain-crypto.md)
 2. [Public Key Cryptography](./public-key.md)
@@ -9,3 +9,5 @@
 5. [UTXO & Account Based Model](./utxo-account.md)
 6. [Tree Data Structures](./tree-structures.md)
 7. [Blockchain Data Storage](./blockchain-storage.md)
+
+[^1]: Images from Alchemy
