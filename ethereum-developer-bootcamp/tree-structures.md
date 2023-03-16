@@ -169,6 +169,34 @@ class MerkleTree {
             );
         }
     }
+    /**
+     * Get the proof of existence
+    */
+    getProof(index, layer = this.leaves, proof = []) {
+        // Base case: Layer has just one element
+        if (layer.length === 1) return proof;
+        // Create the next layer by iteration
+        const nextLayer = [];
+        for (let i = 0; i < layer.length; i += 2) {
+            // Check the pair of leaves
+            const [l, r] = [layer[i], layer[i + 1]];
+            // Exception: No right element (there's always left)
+            if (!r) { nextLayer.push(l); continue; }
+            // Default behavior
+            nextLayer.push(this.concat(l, r));
+            // Add leaf neighbor to proof (check left and right of pair)
+            if (i === index || i === index - 1) {
+                // Check the position of the index,
+                // and define the neighbor data and position
+                const left = Boolean(index % 2);
+                const data = left ? l : r;
+                // Push the neighbor to the proof
+                proof.push({ data, left });
+            }
+        }
+        // Recursion over the layer (reduced by half at every run)
+        return this.getProof(Math.floor(index / 2), nextLayer, proof);
+    }
 }
 
 module.exports = MerkleTree;
