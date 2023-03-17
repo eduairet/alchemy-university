@@ -122,7 +122,73 @@ More Txs
 
 -   Records transactions in Ethereum -> Once mined never updated
 -   Each transaction records multiple entries of each Tx (gasPrice, value)
+-   Code example
 
+    ```JS
+    // Trie Node Example
+    class TrieNode {
+        constructor(key = null) {
+            /*
+            The first one will have null,
+            and the following ones will be the value
+            */
+            this.key = key;
+            /*
+            Nodes between first and last nodes,
+            contains the next node
+            */
+            this.children = {};
+            // Only last children node has a true value
+            this.isWord = false;
+        }
+    }
+
+    module.exports = TrieNode;
+    ```
+
+    ```JS
+    // Trie Example
+    const TrieNode = require('./TrieNode');
+
+    class Trie {
+        constructor() {
+            // Starts a default TrieNode
+            this.root = new TrieNode();
+        }
+        /**
+        * Functions to add nodes
+        */
+        insert (word) {
+            // Base cases
+            if (!word) return null;
+            const { length } = word;
+            // Recursion over the rest of the letters
+            this.consumeWord([...word], length, 0, this.root);
+        }
+        consumeWord(arr, len, index, node) {
+            // Defines the next node
+            const nextLetter = arr.shift();
+            let nextNode;
+            if (node.children[nextLetter]) {
+                nextNode = node.children[nextLetter]
+            } else {
+                nextNode = new TrieNode(nextLetter);
+                node.children[nextLetter] = nextNode;
+            }
+            // Last letter case
+            if (index === len -1) {
+                nextNode.isWord = true
+                return;
+            };
+            // Intermediate letters
+            this.consumeWord(arr, len, index + 1, nextNode);
+        }
+    }
+
+    module.exports = Trie;
+    ```
+
+-   Real life example
     ```JSON
     {
     "jsonrpc": "2.0",
