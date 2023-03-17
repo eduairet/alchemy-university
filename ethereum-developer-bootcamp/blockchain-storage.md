@@ -148,6 +148,7 @@ More Txs
 
     ```JS
     // Trie Example
+
     const TrieNode = require('./TrieNode');
 
     class Trie {
@@ -182,6 +183,31 @@ More Txs
             };
             // Intermediate letters
             this.consumeWord(arr, len, index + 1, nextNode);
+        }
+        /*
+        Check if the node is compatible with a word
+        */
+        contains(word) {
+            if (!word) return null;
+            return this.checkWordInNodes([...word], this.root);
+        }
+        checkWordInNodes(arr, node) {
+            // Base case: One letter word or last word
+            if (arr.length === 1) {
+                const lastNode = node.children[arr[0]];
+                // If last node key is equal to the current letter
+                // and is the last word, returns true
+                if (lastNode)
+                    return lastNode.key === arr[0] && lastNode.isWord;
+                // If not returns false
+                return false;
+            }
+            // Check for next node
+            const nextLetter = arr.shift();
+            const nextNode = node.children[nextLetter];
+            if (nextNode)
+                return this.checkWordInNodes(arr, nextNode);
+            return false;
         }
     }
 
