@@ -385,3 +385,53 @@ More Txs
 
 -   Raw data is stored in archive nodes
 -   Knowing about data structures is fundamental to optimize our applications
+
+## Further Reading
+
+- [Vitalik Overview of Merkle Trees](https://blog.ethereum.org/2015/11/15/merkling-in-ethereum)
+    - Merkle trees make posible the scalability of a Blockchain
+    - Merkel trees allow validation of data in a quick easy way through a Merkle Proof that  just needs specific hashes of a block (Merkle Hash) to find the Merkle Root
+    - In Bitcoin they allow Simplified Payment Verification for light clients thanks to block headers that hash the following values:
+        - A hash of the previous header
+        - A timestamp
+        - A mining difficulty value
+        - A proof of work nonce
+        - A root hash for the Merkle tree containing the transactions for that block. 
+        - Merkle tree is not useful to show the current state of the Blockchain
+    - Merkle Proofs in Ethereum
+        - Contain TXs, Receipts and State
+        - Make data query possible even for light clients
+    - Patricia Trees in Ethereum
+        - Structure
+            - Patricia trie for state: {address: balance}
+            - Storage trie for persistent data writing (smart contracts)
+            - Transaction trie -> TXs of a block
+            - Receipts trie -> log/events for contracts
+        - Efficient data verification
+        - Can quickly change values and only recompute a portion of the tree (prevents some DDOS attack vectors)
+        - Merkle tree for transaction
+        - There is a limit to the depth of the tree, which prevents other DDOS attack vectors
+        - The order of the updates do not matter for the root hash
+        - Good for frequent update of state, and keys adding and deleting
+    - RLP
+        - Serialization format used in Ethereum (like a JSON)
+        - Sends data from one machine to another in a format readable for them
+- [Patricia Merkle Trees Medium](https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d)
+    - Trie -> Tree-like data to retrieve a string value across several nodes
+        - Groups similar groups of letters
+    - Merkle Tree
+        - Consistency of data (leaves: hash of data blocks; Nodes: Hashes of their children)
+        - Merkle Tree proofs are computationally easy and fast
+            - Require only a small chunks of data to be broadcasted across a network
+        - Patricia Merkle Tree
+            - Key: Value strorage
+            - O(log(n)) efficient
+            - Easier to code
+            - Root for each of the tries is a Keccak 256-bit hash, and three out of four of the tries listed above exist within the block header, Receipt Tree, State Tree and Transaction Tree
+            - The Storage Tree’s root lives within the RLP encoded data value within the State Trie. See Figure H below.
+        - Ethereum uses RLP for data serialization, but it will change in a near future
+        - Transaction Trie: data after mining (nonce, gas, recipient, tx signature, data)
+        - Receipt trie: post-transaction state, cumulative gas, logs, bloom filter (useful for ZKP)
+        - State Trie: key, pair value with nonce, balance, storage root, code hash (constantly updated)
+        - Storage trie: contract data per account
+- [Merkle Tree conversation](https://ethereum.stackexchange.com/questions/268/ethereum-block-architecture/6413#6413)
