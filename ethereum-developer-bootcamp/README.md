@@ -9,5 +9,7 @@
 5. [UTXO & Account Based Model](./utxo-account.md)
 6. [Tree Data Structures](./tree-structures.md)
 7. [Blockchain Data Storage](./blockchain-storage.md)
+8. [Introduction to Ethereum](./ethereum-intro.md)
+8. [Proof of Stake](./proof-stake.md)
 
 [^1]: Images from Alchemy
