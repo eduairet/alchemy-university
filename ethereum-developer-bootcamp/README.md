@@ -10,6 +10,7 @@
 6. [Tree Data Structures](./tree-structures.md)
 7. [Blockchain Data Storage](./blockchain-storage.md)
 8. [Introduction to Ethereum](./ethereum-intro.md)
-8. [Proof of Stake](./proof-stake.md)
+9. [Proof of Stake](./proof-stake.md)
+10. [Gas on Ethereum](./gas-ethereum.md)
 
 [^1]: Images from Alchemy

@@ -27,14 +27,16 @@ You can build powerful decentralized, highly available, transparent, and neutral
 -   Ethereum has a virtual machine that supports Turing Complete languages (you can build applications and programs on top of it)
 -   You can run loops (risk of halting problem [run forever] managed by the Ethereum Virtual Machine) on Ethereum, while Bitcoin’s script doesn’t allow it
 -   Other differences:
-    Ethereum Bitcoin
-    Proof of Stake Proof of Work
-    Account model UTXO model
-    secp256k1 elliptic curve secp256k1 elliptic curve
-    Orphan blocks rewarded Orphan blocks not rewarded
-    Block every 12 seconds Block every 10 minutes
-    Difficulty changes on every block Difficulty changes every 2016 blocks
-    Turing complete smart contracts Non-Turing complete scripts
+
+    | Ethereum                          | Bitcoin                              |
+    | --------------------------------- | ------------------------------------ |
+    | Proof of Stake                    | Proof of Work                        |
+    | Account model                     | UTXO model                           |
+    | secp256k1 elliptic curve          | secp256k1 elliptic curve             |
+    | Orphan blocks rewarded            | Orphan blocks not rewarded           |
+    | Block every 12 seconds            | Block every 10 minutes               |
+    | Difficulty changes on every block | Difficulty changes every 2016 blocks |
+    | Turing complete smart contracts   | Non-Turing complete scripts          |
 
 ## The Ethereum Virtual Machine
 
