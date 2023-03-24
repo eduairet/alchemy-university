@@ -69,3 +69,36 @@ You can build powerful decentralized, highly available, transparent, and neutral
     -   Every fork needs the clients to be updated
         -   Sometimes there are forks that are not accepted, like [the DAO fork](https://eips.ethereum.org/EIPS/eip-779) which split the network into two different blockchains, Ethereum and Ethereum Classic
         -   [Here’s a list with all the Ethereum Hard Forks](https://ethereum.stackexchange.com/questions/13014/summary-and-history-of-the-ethereum-hard-forks/13015#13015)
+
+## Further Reading
+
+-   [Node Clients](https://ethernodes.org)
+    -   Is important to have several node to reduce security risks
+    -   Alchemy runs several clients under the hood
+-   History of Ethereum - [Infinite Machine by Camilla Russo](https://books.apple.com/mx/book/the-infinite-machine-how-an-army-of-crypto/id1606538229?l=en)
+    YEAR PHASE DETAILS
+    2013 Ideation Vitalik Buterin releases the Ethereum white paper, proposing a new platform which would allow for decentralized application to mark the start of a new era of online transactions.
+    2014 Initial Sale Ether officially goes on sale for the first time. The Yellow paper is released.
+    2015 Project Drops Ethereum mainnet launches. The Ethereum network goes live.
+    2016 Major Split Ethereum is split into two separate blockchains, Ethereum, and Ethereum Classic, as a result of a US$50 million worth of funds being hacked.
+    2021 EIP1559 Ethereum changes how the system processes and calculates transaction fees and gas
+    2022 The Merge Ethereum transitions from Proof of Work to Proof of Stake
+-   [Ether: Ultrasound Money](https://ultrasound.money)
+    -   Ether is deflationary since the `baseFee` of every transaction is burned
+-   Use cases of Ethereum
+    -   Ownership records
+    -   Code verifiable by all its consumers
+    -   Decentralized finance
+    -   NFTs
+    -   DAOs
+-   [Whitepaper](https://ethereum.org/en/whitepaper/)
+-   [Yellowpaper](https://ethereum.github.io/yellowpaper/paper.pdf)
+-   [Beigepaper](https://github.com/chronaeon/beigepaper)
+-   [ethereum.org](https://ethereum.org/en/)
+-   [Alchemy overviews](https://www.alchemy.com/overviews)
+-   [Alchemy DApp Store](https://www.alchemy.com/dapps)
+-   [Alchemy Developer Hub](https://docs.alchemy.com)
+-   [EVM opcodes](https://github.com/crytic/evm-opcodes)
+-   [Pre-history of Ethereum](https://vitalik.ca/general/2017/09/14/prehistory.html)
+-   [Patricia trie specification](https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/)
+-   [Mastering Ethereum](https://github.com/ethereumbook/ethereumbook)

@@ -13,5 +13,6 @@
 9. [Proof of Stake](./proof-stake.md)
 10. [Gas on Ethereum](./gas-ethereum.md)
 11. [Ethereum Accounts](./ethereum-acounts.md)
+12. [Reading Data from Ethereum](./reading-data.md)
 
 [^1]: Images from Alchemy

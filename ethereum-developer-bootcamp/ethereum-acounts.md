@@ -19,5 +19,3 @@
 -   Make transactions to call functions on the contract
 -   Can call another contract
 -   Once deployed it cannot be changed but its storage (persistent memory) can be updated through transactions (there’s a possibility to upgrade a contract using proxy contracts)
-
-## Further Reading
