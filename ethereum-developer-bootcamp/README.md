@@ -12,5 +12,6 @@
 8. [Introduction to Ethereum](./ethereum-intro.md)
 9. [Proof of Stake](./proof-stake.md)
 10. [Gas on Ethereum](./gas-ethereum.md)
+11. [Ethereum Accounts](./ethereum-acounts.md)
 
 [^1]: Images from Alchemy
