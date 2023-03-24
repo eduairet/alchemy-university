@@ -76,13 +76,16 @@ You can build powerful decentralized, highly available, transparent, and neutral
     -   Is important to have several node to reduce security risks
     -   Alchemy runs several clients under the hood
 -   History of Ethereum - [Infinite Machine by Camilla Russo](https://books.apple.com/mx/book/the-infinite-machine-how-an-army-of-crypto/id1606538229?l=en)
-    YEAR PHASE DETAILS
-    2013 Ideation Vitalik Buterin releases the Ethereum white paper, proposing a new platform which would allow for decentralized application to mark the start of a new era of online transactions.
-    2014 Initial Sale Ether officially goes on sale for the first time. The Yellow paper is released.
-    2015 Project Drops Ethereum mainnet launches. The Ethereum network goes live.
-    2016 Major Split Ethereum is split into two separate blockchains, Ethereum, and Ethereum Classic, as a result of a US$50 million worth of funds being hacked.
-    2021 EIP1559 Ethereum changes how the system processes and calculates transaction fees and gas
-    2022 The Merge Ethereum transitions from Proof of Work to Proof of Stake
+
+    | YEAR | PHASE         | DETAILS                                                                                                                                                                            |
+    | ---- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | 2013 | Ideation      | Vitalik Buterin releases the Ethereum white paper, proposing a new platform which would allow for decentralized application to mark the start of a new era of online transactions. |
+    | 2014 | Initial Sale  | Ether officially goes on sale for the first time. The Yellow paper is released.                                                                                                    |
+    | 2015 | Project Drops | Ethereum mainnet launches. The Ethereum network goes live.                                                                                                                         |
+    | 2016 | Major Split   | Ethereum is split into two separate blockchains, Ethereum, and Ethereum Classic, as a result of a US$50 million worth of funds being hacked.                                       |
+    | 2021 | EIP1559       | Ethereum changes how the system processes and calculates transaction fees and gas.                                                                                                 |
+    | 2022 | The Merge     | Ethereum transitions from Proof of Work to Proof of Stake.                                                                                                                         |
+
 -   [Ether: Ultrasound Money](https://ultrasound.money)
     -   Ether is deflationary since the `baseFee` of every transaction is burned
 -   Use cases of Ethereum
