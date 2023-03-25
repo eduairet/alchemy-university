@@ -118,3 +118,31 @@ axios
   uncles: []
 }
 ```
+
+## Ethereum Nodes
+
+-   Maintain integrity and data on the network
+-   Type of nodes
+    -   Full nodes
+        -   Have a full copy of the blockchain locally
+        -   Store and validate blocks and transition
+-   Problems on Web3
+    -   Scalability
+        -   Actual size of Ethereum makes difficult to have your own node (weeks downloading)
+        -   If a node goes down, their users won’t be able to make more requests
+    -   Reliability
+        -   Even nodes with 1.5 reliability have 1.5 days of downtime every month
+    -   Data consistency
+        -   Latest block can vary between nodes
+        -   Load balancing can return inconsistent data
+            -   Can be reflected in some of the nodes involved in balancing and not in some others
+-   Node providers as Alchemy solve the previous problems and offer more consistent load balancing under the hood, with a so called Supernode
+
+### Data Storage
+
+-   Ethereum use Merkle Patricia Tries to store data
+-   Data can be proven as valid without retrieving all of it thanks to its root
+    -   State trie: global state of the network
+    -   Storage trie: account storage
+    -   Transactions trie: all transactions of a block
+    -   Receipts trie: data and logs from every transaction
