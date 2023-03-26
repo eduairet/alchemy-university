@@ -51,6 +51,8 @@ Alchemy
 
 -   With every Node as a service you’ll need an API key to access the endpoint of the node you’re looking for
 -   With [Alchemy](https://www.alchemy.com) you can create an API key for different networks
+    -   Check the requests at your [dashboard](https://dashboard.alchemy.com/explorer)
+    -   Draft quick calls using the [composer](https://dashboard.alchemy.com/composer)
 -   JSON-RPC is a way to send and receive JSON between the client and the server (in this case our Alchemy node)
 -   Here’s an example of a command line call
 
