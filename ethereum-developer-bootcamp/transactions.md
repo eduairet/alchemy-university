@@ -92,9 +92,10 @@
 -   Add your arguments if needed `helloWorld(uint256)`
 -   Send the hash to calldata
 
-## Example
+## Examples
 
 ```JS
+// Alchemy SDK
 const { Alchemy, Network, Wallet, Utils } = require('alchemy-sdk');
 require('dotenv').config();
 

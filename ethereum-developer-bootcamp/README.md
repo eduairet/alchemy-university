@@ -15,5 +15,6 @@
 11. [Ethereum Accounts](./ethereum-acounts.md)
 12. [Reading Data from Ethereum](./reading-data.md)
 13. [Ethereum Transactions](./transactions.md)
+13. [Frontend Libraries](./frontend-libraries.md)
 
 [^1]: Images from Alchemy
