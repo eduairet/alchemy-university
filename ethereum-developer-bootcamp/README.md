@@ -14,5 +14,6 @@
 10. [Gas on Ethereum](./gas-ethereum.md)
 11. [Ethereum Accounts](./ethereum-acounts.md)
 12. [Reading Data from Ethereum](./reading-data.md)
+13. [Ethereum Transactions](./transactions.md)
 
 [^1]: Images from Alchemy
