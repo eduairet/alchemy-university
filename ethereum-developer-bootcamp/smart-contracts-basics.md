@@ -67,7 +67,7 @@ const myContract = contract.deploy('0x38cE03CF394C349508fBcECf8e2c04c7c66D58CB')
             -   Default value, same as `uint`
     -   `int` signed
 -   Operators
-    -   `-` `+` `/`
+    -   `-` `+` `/` `%` `%`
 -   Data Types
     -   `bool`
     -   `string`
