@@ -15,6 +15,7 @@
 11. [Ethereum Accounts](./ethereum-acounts.md)
 12. [Reading Data from Ethereum](./reading-data.md)
 13. [Ethereum Transactions](./transactions.md)
-13. [Frontend Libraries](./frontend-libraries.md)
+14. [Frontend Libraries](./frontend-libraries.md)
+15. [Smart Contracts Basics](./smart-contracts-basics.md)
 
 [^1]: Images from Alchemy
