@@ -91,6 +91,41 @@ const myContract = contract.deploy('0x38cE03CF394C349508fBcECf8e2c04c7c66D58CB')
         -   `block.number` - Current block number
         -   `block.timestamp` - Current block timestamp
 
+## Solidity and the EVM
+
+-   It’s turig-complete
+    -   Can perform any logic and mathematical operations
+    -   Can perform loops
+        -   At lower lever it can execute `JUMP` `JUMPI` which are instructions to handle a loop and also to make it infinite (this won’t happen because of gas)
+-   High-level Language that compiles down into byte code, which runs in the Ethereum Virtual Machine
+-   It becomes expensive to be inefficient since every computational operation costs, and one impresition can lead to a big amount of Ether
+-   Bytecode:
+
+    -   Computers read binary language (zeroes and ones)
+        -   `pre-process` - joins all the elements of your code
+        -   `process` - joins pieces outside your code (like libraries)
+        -   `compile` - the engine checks the code is OK and prepares it for assembly
+        -   `assembly` - Makes the code os readable
+        -   `linking` - Makes the machine code
+            -   If the code comes to this step the machine can now read it
+    -   Bytecode is compiled from opcodes, which are a collection of words that tell the computer what to do, they’re often called mnemonic and look like this `PUSH1 0x80 PUSH1 0x40 MSTORE CALLVALUE DUP1 ISZERO PUSH1 0xF`
+    -   This opcode is assembled into something like this
+
+        ```
+        tag 7               while(i < 5) ...
+        JUMPDEST          while(i < 5) ...
+        PUSH 5            5
+        DUP3              i
+        LT                i < 5
+        ```
+
+    -   Ethereum reads the bytecode (hex) instead the binary code mentioned above `6080604052348015600f57600080fd5b5060a58061001e600039...`
+
+-   Stack
+    -   Is where EVM load/stores runtime data
+    -   Data is hold temporarily (local variables, math)
+    -   LIFO: Push and pop
+
 ## Recommended resources
 
 1. [Mastering Ethereum](https://github.com/ethereumbook/ethereumbook)
@@ -98,5 +133,6 @@ const myContract = contract.deploy('0x38cE03CF394C349508fBcECf8e2c04c7c66D58CB')
 2. [Smart Contracts: Building Blocks for Digital Markets](https://www.fon.hum.uva.nl/rob/Courses/InformationInSpeech/CDROM/Literature/LOTwinterschool2006/szabo.best.vwh.net/smart_contracts_2.html)
 3. [The Idea of Smart Contracts](https://www.fon.hum.uva.nl/rob/Courses/InformationInSpeech/CDROM/Literature/LOTwinterschool2006/szabo.best.vwh.net/idea.html)
 4. [Solidity by example](https://solidity-by-example.org)
+5. [ethersplay](https://github.com/crytic/ethersplay)
 
 [^1]: There are many other languages like Vyper, which is more like python
