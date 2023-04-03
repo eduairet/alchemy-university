@@ -17,6 +17,7 @@
 13. [Ethereum Transactions](./transactions.md)
 14. [Frontend Libraries](./frontend-libraries.md)
 15. [Smart Contracts Basics](./smart-contracts-basics.md)
-15. [Smart Contracts](./smart-contracts.md)
+16. [Smart Contracts](./smart-contracts.md)
+17. [Hardhat](./hardhat.md)
 
 [^1]: Images from Alchemy

@@ -259,6 +259,13 @@
 
 ### Code Examples
 
+-   Create a contract instance with `ethers.js`
+
+    ```JS
+    
+    const myContract = new ethers.Contract(ADDRESS_OF_CONTRACT, ABI, SIGNER);
+    ```
+
 -   Signing transactions with different EOAs
 
     ```Solidity
