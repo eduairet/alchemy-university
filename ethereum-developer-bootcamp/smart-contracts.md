@@ -71,6 +71,7 @@
         } else {
             return "Goodbye world!";
         }
+        // Return values are useful to communicate state changes to the users of the blockchain
     }
     function justView() public view returns(address) {
         // Reads the contract's address
@@ -100,3 +101,4 @@
     -   `external` - only other contracts (external to the current contract) and EOAs can call, no internal calling
     -   `internal` - only this contract along with its inheritance chain can call
     -   `private` - only this contract can call
+-   You can create two different functions with the same name if they have different parameters
