@@ -210,49 +210,109 @@
 
                 ```
 
-        -   Interaction with the ABI needs the contract address to bind the ABI with the bytecode on the blockchain
-        -   Ethers has an easy way to achieve this purpose
+            -   Interaction with the ABI needs the contract address to bind the ABI with the bytecode on the blockchain
+            -   Ethers has an easy way to achieve this purpose
 
-            ```JS
-            require('dotenv').config();
-            const ethers = require('ethers');
-            const contractABI = require('./ABI.json');
+                ```JS
+                require('dotenv').config();
+                const ethers = require('ethers');
+                const contractABI = require('./ABI.json');
 
-            const provider = new ethers.providers.AlchemyProvider(
-                'goerli',
-                process.env.TESTNET_ALCHEMY_KEY
-            );
-
-            // Required in case we need to sign and broadcast requests
-            const wallet = new ethers.Wallet(process.env.TESTNET_PRIVATE_KEY, provider);
-
-            async function main() {
-                const counterContract = new ethers.Contract(
-                    '0x5F91eCd82b662D645b15Fd7D2e20E5e5701CCB7A',
-                    contractABI,
-                    wallet
+                const provider = new ethers.providers.AlchemyProvider(
+                    'goerli',
+                    process.env.TESTNET_ALCHEMY_KEY
                 );
 
-                // This function writes to the blockchain and increases the counter of the contract by one
-                await counterContract.inc();
+                // Required in case we need to sign and broadcast requests
+                const wallet = new ethers.Wallet(process.env.TESTNET_PRIVATE_KEY, provider);
 
-                // This function reads data from the contract
-                const counter =  await counterContract.get();
-                console.log(counter);
-            }
+                async function main() {
+                    const counterContract = new ethers.Contract(
+                        '0x5F91eCd82b662D645b15Fd7D2e20E5e5701CCB7A',
+                        contractABI,
+                        wallet
+                    );
 
-            main();
-            ```
+                    // This function writes to the blockchain and increases the counter of the contract by one
+                    await counterContract.inc();
 
-    -   Bytecode
-        -   There are two types of byte code
-            1. Creation time bytecode - is executed only once at deployment, contains the constructor
-            2. Run time bytecode - is stored on the blockchain as permanent executable
-        -   Transaction receipt
-            -   After every transaction executed we get a receipt, when using frontend libraries we can get this receipt by reading the response after executing the transaction
-            -   It’s stored in the receipt trie of the block that included the transaction
-            -   It contains four pieces of information
-                -   Post-Transaction State
-                -   Cumulative Gas Used
-                -   Set of Logs Created During Execution
-                -   Bloom Filter Composed from the Logs
+                    // This function reads data from the contract
+                    const counter =  await counterContract.get();
+                    console.log(counter);
+                }
+
+                main();
+                ```
+
+        -   Bytecode
+            -   There are two types of byte code
+                1. Creation time bytecode - is executed only once at deployment, contains the constructor
+                2. Run time bytecode - is stored on the blockchain as permanent executable
+            -   Transaction receipt
+                -   After every transaction executed we get a receipt, when using frontend libraries we can get this receipt by reading the response after executing the transaction
+                -   It’s stored in the receipt trie of the block that included the transaction
+                -   It contains four pieces of information
+                    -   Post-Transaction State
+                    -   Cumulative Gas Used
+                    -   Set of Logs Created During Execution
+                    -   Bloom Filter Composed from the Logs
+
+### Code Examples
+
+-   Signing transactions with different EOAs
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity 0.7.5;
+
+    contract Contract {
+        address owner;
+        string public message;
+
+        constructor() {
+            owner = msg.sender;
+        }
+
+        function modify(string calldata _message) external {
+            require(msg.sender != owner, "Owner cannot modify the message!");
+            message = _message;
+        }
+    }
+    ```
+
+    ```JS
+    // Helper to create a nadom message
+    const ranWord = () => {
+        const words = ['Duck', 'Fish', 'Bear'];
+        const { length } = words;
+        return words[Math.round(Math.random() * (length - 1))];
+    }
+
+    // Function that calls .modify() using a different signer
+    const setMessage = async (contract, signer) => {
+        const msg = ranWord();
+        return await contract.connect(signer).modify(msg);
+    };
+
+    module.exports = setMessage;
+    ```
+
+-   Sending ether from frontend
+
+    -   The following example shows the `.deposit()` function call
+    -   The function doesn't hav parameters in the contract but is payable
+
+        ```Solidity
+        // SPDX-License-Identifier: MIT
+        pragma solidity 0.7.5;
+
+        contract Contract {
+            function deposit() payable external { }
+        }
+        ```
+
+    -   When calling it in the frontend we're passing an [overrides object](https://docs.ethers.org/v5/api/contract/contract/#contract-functionsSend) that corresponds to the properties of the transaction
+
+        ```JS
+        const deposit = async contract => await contract.deposit({value: parseEther('1')});
+        ```
