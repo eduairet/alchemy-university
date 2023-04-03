@@ -1,4 +1,4 @@
-# Smart Contracts
+# Smart Contracts in Solidity
 
 -   This is an example of a smart contract in solidity:
 
@@ -57,3 +57,46 @@
     -   Is static type, there's no need to indicate the type of variable (`var`, `let`, `const`, `let mut`, etc)
     -   Contracts won't compile if they have inconsistencies like `bool isGood = true; isGood = “false”;`
         -   Here changing the variable type will throw an error
+
+## Functions
+
+-   The keyword `function` is the most common way to construct a function
+
+    ```Solidity
+    // function_keyword + function_name(paramter_list) + visibility + function type + return types {}
+    function helloWorld(bool _saysHello) external pure returns(string memory) {
+        // statements
+        if (_saysHello) {
+            return "Hello world!";
+        } else {
+            return "Goodbye world!";
+        }
+    }
+    function justView() public view returns(address) {
+        // Reads the contract's address
+        return address(this);
+    }
+    ```
+
+    -   Function types
+        -   `view` reads data from the state
+        -   `pure` doesn't change or reads state
+        -   Functions that change state (write) don't need a special keyword
+    -   `external pure` is a common patter for contract libraries, since allow the function to be shared to another contract
+    -   Function returns can also be implicit
+
+        ```Solidity
+        function helloWorld(bool _saysHello) external pure returns (string memory m) {
+            m = "Hello world!";
+            if (!_saysHello) m = "Goodbye world!";
+            // Implicit return of m
+        }
+        ```
+
+        -   This also works with several values `returns(uint sum, uint product)`
+
+-   Visibility (same behavior as variables except that variables cannot be `external` or `internal`)
+    -   `public` - any contract or EOA can call into this function
+    -   `external` - only other contracts (external to the current contract) and EOAs can call, no internal calling
+    -   `internal` - only this contract along with its inheritance chain can call
+    -   `private` - only this contract can call
