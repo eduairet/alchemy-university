@@ -102,3 +102,157 @@
     -   `internal` - only this contract along with its inheritance chain can call
     -   `private` - only this contract can call
 -   You can create two different functions with the same name if they have different parameters
+
+## Smart Contract Communication
+
+### Contract Compilation
+
+-   Produces two artifacts
+
+    -   ABI & Bytecode
+
+        -   ABI
+
+            -
+            -   Application Binary Interface
+                -   Interface between two program modules, in this case the contract and a frontend application
+            -   Standard to interact with the contract
+            -   Interaction with the contract outside the blockchain
+            -   Contract to contract interaction
+            -   Defines functions in the contract that can be invoked
+            -   Describes how the function will receive arguments
+            -   ABI for the Ownership contract from above
+
+                ```JSON
+                {
+                    "compiler": {
+                        "version": "0.8.18+commit.87f61d96"
+                    },
+                    "language": "Solidity",
+                    "output": {
+                        "abi": [
+                            {
+                                "inputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "constructor"
+                            },
+                            {
+                                "inputs": [
+                                    {
+                                        "internalType": "address",
+                                        "name": "newOwner",
+                                        "type": "address"
+                                    }
+                                ],
+                                "name": "changeOwner",
+                                "outputs": [
+                                    {
+                                        "internalType": "address",
+                                        "name": "",
+                                        "type": "address"
+                                    }
+                                ],
+                                "stateMutability": "nonpayable",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [],
+                                "name": "firstOwner",
+                                "outputs": [
+                                    {
+                                        "internalType": "bool",
+                                        "name": "",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "stateMutability": "view",
+                                "type": "function"
+                            }
+                        ],
+                        "devdoc": {
+                            "kind": "dev",
+                            "methods": {},
+                            "version": 1
+                        },
+                        "userdoc": {
+                            "kind": "user",
+                            "methods": {},
+                            "version": 1
+                        }
+                    },
+                    "settings": {
+                        "compilationTarget": {
+                            "contracts/test.sol": "Ownership"
+                        },
+                        "evmVersion": "paris",
+                        "libraries": {},
+                        "metadata": {
+                            "bytecodeHash": "ipfs"
+                        },
+                        "optimizer": {
+                            "enabled": false,
+                            "runs": 200
+                        },
+                        "remappings": []
+                    },
+                    "sources": {
+                        "contracts/test.sol": {
+                            "keccak256": "0x2c754ae44155a25816db515ed3acd2d29505d64ac462c463ad312fb074a227dd",
+                            "license": "MIT",
+                            "urls": [
+                                "bzz-raw://0a584ab1a0ef7a1c006a1d79579db1cf1aa3ee02c46d3a5633e31e2d9f0a8428",
+                                "dweb:/ipfs/QmUBhPtrWVAiFZojnuFutfUuVTWBttGNN6o3HUmD6ZeKy4"
+                            ]
+                        }
+                    },
+                    "version": 1
+                }
+
+                ```
+
+        -   Interaction with the ABI needs the contract address to bind the ABI with the bytecode on the blockchain
+        -   Ethers has an easy way to achieve this purpose
+
+            ```JS
+            require('dotenv').config();
+            const ethers = require('ethers');
+            const contractABI = require('./ABI.json');
+
+            const provider = new ethers.providers.AlchemyProvider(
+                'goerli',
+                process.env.TESTNET_ALCHEMY_KEY
+            );
+
+            // Required in case we need to sign and broadcast requests
+            const wallet = new ethers.Wallet(process.env.TESTNET_PRIVATE_KEY, provider);
+
+            async function main() {
+                const counterContract = new ethers.Contract(
+                    '0x5F91eCd82b662D645b15Fd7D2e20E5e5701CCB7A',
+                    contractABI,
+                    wallet
+                );
+
+                // This function writes to the blockchain and increases the counter of the contract by one
+                await counterContract.inc();
+
+                // This function reads data from the contract
+                const counter =  await counterContract.get();
+                console.log(counter);
+            }
+
+            main();
+            ```
+
+    -   Bytecode
+        -   There are two types of byte code
+            1. Creation time bytecode - is executed only once at deployment, contains the constructor
+            2. Run time bytecode - is stored on the blockchain as permanent executable
+        -   Transaction receipt
+            -   After every transaction executed we get a receipt, when using frontend libraries we can get this receipt by reading the response after executing the transaction
+            -   It’s stored in the receipt trie of the block that included the transaction
+            -   It contains four pieces of information
+                -   Post-Transaction State
+                -   Cumulative Gas Used
+                -   Set of Logs Created During Execution
+                -   Bloom Filter Composed from the Logs
