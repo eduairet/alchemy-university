@@ -19,5 +19,6 @@
 15. [Smart Contracts Basics](./smart-contracts-basics.md)
 16. [Smart Contracts](./smart-contracts.md)
 17. [Hardhat](./hardhat.md)
+18. [Calling EOAs](./calling-eoas.md)
 
 [^1]: Images from Alchemy
