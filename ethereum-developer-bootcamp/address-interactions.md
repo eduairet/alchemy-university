@@ -1,6 +1,8 @@
-# Calling EOAs
+# Address Interactions
 
-## EOAs in a Smart Contract
+## Calling EOAs
+
+### EOAs in a Smart Contract
 
 -   EOAs can be paid inside smart contracts
 
@@ -9,6 +11,8 @@ contract SpecialNumber {
     address author1;
     address author2;
 
+    // payable is needed in latest versions of Solidity to allow the contract to receive ETH
+    // since nonpayable is the default value for every function
     receive() external payable {
         // msg.value is passed to this contract
         uint totalValue = msg.value;
@@ -26,10 +30,24 @@ contract SpecialNumber {
 
 -   Payable functions can receive `ETH`
 -   `receive` is a special function invoked when the contract receives money
+
+    -   It is the function that runs when a contract receives `ETH` without any calldata
+    -   Must be `external` and `payable`
+    -   It cannot receive arguments
+    -   It cannot return anything
+
+-   Fallback function
+    -   Is an external function that will be triggered when there's an error in the calldata
+    -   Cannot accept any arguments or return any values
+    -   Doesn't need to be payable, but if payable it can replace `receive`
+        -   Useful when you receive data and value, like signature mistakes
 -   `call` method addresses use to send input data or ether to an address
     -   `msg` message
-        -   `msg.value` amount of `ETH` received
-        -   `msg.sender` who sent the `ETH`
+        -   `msg.data (bytes)` - the complete calldata
+        -   `msg.sender (address)` - the address sending the message
+        -   `msg.sig (bytes4)` - the targeted function signature
+            -   First four bytes of the `keccak256` hash of the function signature
+        -   `msg.value (uint)` - the amount of wei sent
     -   `tx` transaction sent by the EOA
 -   `{}` allow to override value and gas, relevant when calling smart contracts
     -   Unspecified `gas` will be sent across all the remaining gas in the transaction

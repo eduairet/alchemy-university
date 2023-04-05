@@ -51,7 +51,9 @@
             ```Solidity
             function getValues() public pure returns (int, bool) { return (49, true); }
             ```
-    -   There are no `this` or `self` keywords for state variables, just for the contract itself like here `address(this).balance`
+    -   There are no `this` or `self` keywords for state variables, just for the contract itself and its functions
+        -   `address(this).balance` - Contract balance
+        -   `this.someContractFunction()` - Calling a contract function inside the contract
     -   Every change in a state variable is permanent, in the example when the first owner boolean is changed in `firstOwner = !firstOwner` there's no way to revert that change
     -   Block scoped variables, like the parameters of the functions only live in memory while they're used
     -   Is static type, there's no need to indicate the type of variable (`var`, `let`, `const`, `let mut`, etc)
@@ -102,6 +104,10 @@
     -   `internal` - only this contract along with its inheritance chain can call
     -   `private` - only this contract can call
 -   You can create two different functions with the same name if they have different parameters
+-   `selfdestruct()`
+    -   Clears the bytecode og the contract
+    -   Makes interaction with the contract impossible unless a [`CREATE2`](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1014.md) opcode is used to re-deploy the same address
+    -   It's a good practice to lock this function from bad actors, like limiting it's use just for the owner
 
 ## Smart Contract Communication
 
@@ -262,7 +268,7 @@
 -   Create a contract instance with `ethers.js`
 
     ```JS
-    
+
     const myContract = new ethers.Contract(ADDRESS_OF_CONTRACT, ABI, SIGNER);
     ```
 
