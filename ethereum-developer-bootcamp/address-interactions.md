@@ -54,3 +54,13 @@ contract SpecialNumber {
 -   `("")` here is where the call data is passed, for example the name of a function
     -   Calls that don’t attend a specific function are empty strings
 -   `return value` `(bool success1, )` Will inform us if the transaction was successful
+
+## Reverting Transactions
+
+-   Reverting means making the transaction like never happen
+    -   Removes all the state changes but it can be included in a block (gas is actually used)
+-   This action is triggered by the opcode `REVERT`
+    -   We can control when to revert the transactions by using
+        -   `revert`
+        -   `require`
+        -   `assert`
