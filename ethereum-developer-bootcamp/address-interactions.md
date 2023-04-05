@@ -61,6 +61,21 @@ contract SpecialNumber {
     -   Removes all the state changes but it can be included in a block (gas is actually used)
 -   This action is triggered by the opcode `REVERT`
     -   We can control when to revert the transactions by using
-        -   `revert`
-        -   `require`
-        -   `assert`
+        -   `revert` - Throws error
+        -   `require` - Throws error, good for input
+        -   `assert` - Raises an exception, good for invariants 
+
+## Modifiers
+
+```Solidity
+
+function someFunc() public view someFuncModifier {
+    // do something
+}
+
+modifier someFuncModifier {
+    // do something before the function
+    _; // Here the function is executed
+    // do something after the function
+}
+```
