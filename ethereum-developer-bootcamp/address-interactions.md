@@ -61,9 +61,16 @@ contract SpecialNumber {
     -   Removes all the state changes but it can be included in a block (gas is actually used)
 -   This action is triggered by the opcode `REVERT`
     -   We can control when to revert the transactions by using
-        -   `revert` - Throws error
-        -   `require` - Throws error, good for input
-        -   `assert` - Raises an exception, good for invariants 
+        -   `revert`
+            -   Throws error
+            -   Can be used as a statement `if(!someBool) revert;`
+            -   Older versions of Solidity used it as a function ``if(!someBool) revert(message);`
+        -   `require`
+            -   Throws error
+            -   Good for user input
+        -   `assert`
+            -   Raises an exception
+            -   Good for invariants
 
 ## Modifiers
 
@@ -79,3 +86,65 @@ modifier someFuncModifier {
     // do something after the function
 }
 ```
+
+## Calling Contract Addresses
+
+-   You can send data from a contract to another contract
+
+    ```Solidity
+    contract A {
+        function setValueOnB(address b) external {
+            // Calling contract B storeValue() with data manually encoded
+            (bool s, ) = b.call(
+                abi.encodeWithSignature("storeValue(uint256)", 22)
+                // this will send the 4 first bytes of the data
+                // this method needs full types like uint256,
+                // won't work using aliases like uint
+                // it only needs the name of the function and parameters types
+                // separated by comma with no space
+                // receiveData(uint256,uint256)
+            );
+            require(s);
+        }
+    }
+    contract B {
+        uint x;
+        function storeValue(uint256 _x) external {
+            x = _x; // 22
+        }
+    }
+    ```
+
+    ```Solidity
+    contract A {
+        function setValueOnB(address b) external {
+            // Calling contract B storeValue() with definition value
+            B(b).storeValue(22); // B is the same from previous block
+        }
+    }
+    ```
+
+    -   When using these kind of actions there's a chance that something get's wrong, if we're sending wrong calldata to other contrat this will call it's fallback function if there's one
+
+-   If you don't have acces to the contract where you're calling the function you can use an interface to give solidity enough information to perform the call
+
+    ```Solidity
+    interface B {
+        function storeValue(uint256) external;
+    }
+    ```
+
+-   If you want to send data from contract to contract you can do it this way
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.4;
+
+    contract Sidekick {
+        function relay(address hero, bytes memory data) external {
+            // send all of the data as calldata to the hero
+            (bool s, ) = hero.call(data);
+            require(s);
+        }
+    }
+    ```
