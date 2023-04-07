@@ -120,3 +120,88 @@
         ```
 
     -   This contract is now on the Sepolia blockchain, check it [here](https://sepolia.etherscan.io/address/0xF866fAf261a3A7208fe70aFCB83e8746676e5316)
+
+## Testing
+
+-   JS + Solidity Testing Resources
+
+    -   [Chai](https://www.chaijs.com)
+    -   [Chai BBD Styled](https://www.chaijs.com/api/bdd/)
+    -   [Chai Assert](https://www.chaijs.com/api/assert/)
+    -   [Mocha hooks](https://mochajs.org/#hooks)
+    -   [Solidity Chai Matchers](https://ethereum-waffle.readthedocs.io/en/latest/matchers.html)
+
+-   Structure:
+
+    -   Imports:
+        ```JS
+        // JavaScript
+        const ethers = require('hardhat').ethers; // hardhat.ethers
+        const chai = require('chai'); // Testing suite
+        const { solidity } = require('ethereum-waffle'); // solidity tests
+        chai.use(solidity); // allow chai to have solidity tests
+        ```
+        ```TS
+        // TypeScript
+        import { ethers } from 'hardhat'; // hardhat.ethers
+        import chai, { expect, assert } from 'chai'; // Testing suite
+        import { solidity } from "ethereum-waffle"; // solidity tests
+        chai.use(solidity); // allow chai to have solidity tests
+        const { Contract } = ehters; // Types are often here
+        ```
+    -   Describe:
+
+        -   Function that describes the test suite
+
+            ```JS
+            // describe(Suite name, callback)
+            describe('My Contract Tests', () => {})
+            ```
+
+        -   Unit tests are described with `it`
+
+            ```JS
+            describe('Deployment', () => {
+                // They should be inside the describe's callback scope
+                // it(Test description, callback)
+                it('The contract was deployed', () => {});
+            })
+            ```
+
+        -   In the it callback we write the logic of our unit test
+
+            ```JS
+            describe('Deployment', () => {
+                it('The contract was deployed', async () => {
+                    const MyContract = await ethers.getContractFactory('MyContract'),
+                        myContract = await MyContract.deploy();
+                });
+            })
+            ```
+
+        -   And we check if the test was passed
+
+            ```JS
+            describe('Deployment', () => {
+                it('The contract was deployed', async () => {
+                    const MyContract = await ethers.getContractFactory('MyContract'),
+                        myContract = await MyContract.deploy();
+                    // Here we use the chai library to check that contract has an address property to pass the test
+                    expect(myContract, "Faucet doesn't have an address")
+                        .to.haveOwnProperty('address');
+                });
+            })
+            ```
+
+-   Testing
+
+    -   You can test all the testst in your `test` directory with
+        ```shell
+        npx hardhat test
+        ```
+    -   Or you can test individual files with
+        ```shell
+        npx hardhat test test/some-test.js
+        ```
+
+-   Check a complete test [here](https://github.com/eduairet/smart-contract-testing)
