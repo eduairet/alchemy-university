@@ -20,5 +20,6 @@
 16. [Smart Contracts](./smart-contracts.md)
 17. [Hardhat](./hardhat.md)
 18. [Address Interactions](./address-interactions.md)
+18. [Solidity](./solidity.md)
 
 [^1]: Images from Alchemy
