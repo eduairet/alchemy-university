@@ -47,20 +47,54 @@
         }
         ```
 
+    -   For sake of performance is always better to go for a mapping instead of an array, check this example that leads to the same result
+
+        ```Solidity
+        mapping(address => bool) students;
+
+        function isStudent(address addr) external view returns(bool) {
+            return students[addr];
+        }
+        ```
+
+        ```Solidity
+        address[] students;
+
+        function isStudent(address addr) external view returns(bool) {
+            for(uint i = 0; i < students.length; i++) {
+                if(students[i] === addr) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        ```
+
 -   Another use cases
 
--   You can check the amount of ERC-20 tokens each address has
+    -   You can check the amount of ERC-20 tokens each address has, if someone has voted in a DAO and many other use cases
 
-    ```Solidity
-    mapping(address => uint) public balanceOf; // ERC-20s
-    mapping(address => bool) public hasVoted; // DAOs
-    mapping(uint => bool) public isMember; // DAOs
-    mapping(string => uint) public userZipCode; // general info tracking
-    ```
+        ```Solidity
+        mapping(address => uint) public balanceOf; // ERC-20s
+        mapping(address => bool) public hasVoted; // DAOs
+        mapping(uint => bool) public isMember; // DAOs
+        mapping(string => uint) public userZipCode; // general info tracking
+        ```
 
 -   Mappings can be nested as well
 
     ```Solidity
     // {address: {gameNumber: uint, result: bool}}
     mapping(address => mapping(uint => bool)) public gameResult;
+    ```
+
+-   Or hold structs
+
+    ```Solidity
+    struct Game {
+        uint number;
+        bool result;
+        uint8 card;
+    }
+    mapping(address => Game) public gameResult;
     ```
