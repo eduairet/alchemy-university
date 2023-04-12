@@ -98,3 +98,28 @@
     }
     mapping(address => Game) public gameResult;
     ```
+
+## Events
+
+-   Logging functionality to write data outside the smart contracts storage in matter of logs
+-   Abstraction on top of the EVM's low-level logging functionality, opcodes `LOG0` to `LOG4`
+-   `indexed` topics on events can be filtered
+-   They are stored in the transaction receipt and are readable outside the contract (gas efficient)
+
+```Solidity
+interface Game {
+    // Defined by the event keyword
+    event Play(address indexed player, bool indexed result);
+}
+```
+
+-   Events can be listened outside the blockchain with frontend libraries
+
+    ```JS
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new Contract(gameTokenAddress, GAME_ABI, provider);
+
+    contract.on('Play', async (player, result) => {
+        console.log(‘Game played. {player, result}');
+    });
+    ```
