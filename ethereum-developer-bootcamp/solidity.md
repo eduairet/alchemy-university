@@ -103,7 +103,13 @@
 
 -   Logging functionality to write data outside the smart contracts storage in matter of logs
 -   Abstraction on top of the EVM's low-level logging functionality, opcodes `LOG0` to `LOG4`
+    -   `LOG0`
+    -   `LOG1` - 1 topic (signature hash)
+    -   `LOG2` - An event with one indexed topic
+    -   `LOG3` - An event with two indexed topics
+    -   `LOG4` - An event with three indexed topics, max of topics to be included in a transaction
 -   `indexed` topics on events can be filtered
+-   A topic is a `32 byte hex hashes`
 -   They are stored in the transaction receipt and are readable outside the contract (gas efficient)
 
 ```Solidity
@@ -123,3 +129,36 @@ interface Game {
         console.log(‘Game played. {player, result}');
     });
     ```
+
+-   Emitting events
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.4;
+
+    contract Collectible {
+        address owner;
+
+        event Deployed(address Owner);
+        // Owner is not mndatory but is good when reading the ABI
+        // event Deployed(address);
+        /*
+        {
+            "indexed": false,
+            "internalType": "address",
+            "name": "",  // "Owner" when used
+            "type": "address"
+        },
+        */
+
+        constructor() {
+            owner = msg.sender;
+            emit Deployed(owner);
+        }
+
+    }
+    ```
+
+### Further reading on Events
+
+-   [Understanding Logs: Deep Dive into `eth_getLogs`](https://docs.alchemy.com/docs/deep-dive-into-eth_getlogs)
