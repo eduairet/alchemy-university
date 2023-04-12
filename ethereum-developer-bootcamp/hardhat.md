@@ -205,3 +205,71 @@
         ```
 
 -   Check a complete test [here](https://github.com/eduairet/smart-contract-testing)
+
+## Local Node
+
+-   You can create a local hardhat node (persistent in memory until is turned off) using `npx hardhat node`
+
+    ```Shell
+    Started HTTP and WebSocket JSON-RPC server at http://127.0.0.1:8545/
+
+    Accounts
+    ========
+
+    WARNING: These accounts, and their private keys, are publicly known.
+    Any funds sent to them on Mainnet or any other live network WILL BE LOST.
+
+    Account #0: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 (10000 ETH)
+    Private Key: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+    Account #1: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 (10000 ETH)
+    Private Key: 0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d
+
+    ...
+    ```
+
+    -   This kind of environment needs an extra setup for the `hardhat.config.js`
+
+        ```JS
+        require("@nomicfoundation/hardhat-toolbox");
+
+        /** @type import('hardhat/config').HardhatUserConfig */
+        module.exports = {
+            solidity: "0.8.17",
+            defaultNetwork: 'localhost' // Remember this line above http://127.0.0.1:8545/
+        };
+        ```
+
+-   With the node running you can now start interact with the Node
+
+    -   Deploy a contract
+
+        ```Shell
+        $ npx hardhat run scripts/deploy.js
+        Compiled 1 Solidity file successfully
+        MyContract deployed to address: 0x5FbDB2315678afecb367f032d93F642f64180aa4
+        ```
+
+    -   Result in the running node
+
+        ```Shell
+        hardhat_addCompilationResult
+        eth_chainId
+        eth_accounts
+        eth_blockNumber
+        eth_chainId (2)
+        eth_estimateGas
+        eth_getBlockByNumber
+        eth_gasPrice
+        eth_sendTransaction
+        Contract deployment: MyContract
+        Contract address:    0x5FbDB2315678afecb367f032d93F642f64180aa4
+        Transaction:         0x3af2eb5a48ea26f6ffd2c72bc02a6f3849033cf6673dd4321bc0c9f7d2b93ef8
+        From:                0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+        Value:               0 ETH
+        Gas used:            106983 of 106983
+        Block #1:            0x6e48c6d2cc308135038c2f1e76b2e7bbb92deba6364ab8a95d89b7d6312d9c5c
+
+        eth_chainId
+        eth_getTransactionByHash
+        ```
