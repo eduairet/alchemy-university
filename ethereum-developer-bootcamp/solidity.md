@@ -1,6 +1,14 @@
 # Solidity
 
-## Mappings
+## Reference types
+
+-   Reference-based data types (pointers referencing to the actual value of the type) in solidity are:
+    -   `arrays`
+    -   `strings`
+    -   `structs`
+    -   `mappings`
+
+### Mappings
 
 -   Mappings are hash tables (key, value pair)
     -   Keys are the values stored in memory
@@ -98,6 +106,10 @@
     }
     mapping(address => Game) public gameResult;
     ```
+
+### Arrays & Structs
+
+- 
 
 ## Events
 
