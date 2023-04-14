@@ -107,9 +107,58 @@
     mapping(address => Game) public gameResult;
     ```
 
-### Arrays & Structs
+### Arrays
 
-- 
+-   Arrays are collections of elements identified by their index
+    -   Fixed size array: Number of elements defined when it’s declared
+    -   Dynamic size array: Size changes during runtime
+-   Storage arrays
+
+    -   Typically declared as a state variable, and can be fixed or dynamic
+
+        ```Solidity
+        contract MyContract {
+            uint[] public arr;  // Dynamic size
+            uint[] public arr2 = [1, 2, 3];  // Fixed size
+            uint[3] public myFixedSizeArr; // Fixed size, start at 3
+        }
+        ```
+
+-   Arrays come with several properties in Solidity:
+    -   `.length` number of elements in the array
+    -   Just in dynamic size
+        -   `.push()` add element to the end
+        -   `.pop()` removes the last element
+-   Looping is not recommended since is very costly
+
+### Structs
+
+-   Struct allows to create your own data type
+
+    ```Solidity
+    struct structName {
+    type1 typeName1;
+    type2 typeName2;
+    }
+    ```
+
+-   Example
+
+    ```Solidity
+    contract Game {
+        struct Player {
+            address id;
+            uint score;
+            uint position;
+        }
+
+        Player[] public players;
+
+        function addPlayer(address _id, uint _score,  uint _position) public {
+            players.push(Player(_id, _score, players.length));
+        }
+    }
+    ```
 
 ## Events
 
