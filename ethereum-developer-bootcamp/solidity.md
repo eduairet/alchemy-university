@@ -3,10 +3,21 @@
 ## Reference types
 
 -   Reference-based data types (pointers referencing to the actual value of the type) in solidity are:
+
     -   `arrays`
     -   `strings`
     -   `structs`
     -   `mappings`
+
+-   Using reference types as arguments requires them to have the `memory` or `calldata` keywords, this way it will tell the Solidity compiler where the data being passed in lives
+
+    ```Solidity
+    string name;
+
+    function addString(string memory _name) public {
+        name = _name;
+    }
+    ```
 
 ### Mappings
 
@@ -157,6 +168,14 @@
         function addPlayer(address _id, uint _score,  uint _position) public {
             players.push(Player(_id, _score, players.length));
         }
+    }
+    ```
+
+-   Structs values can be modified by accessing their keys using square brackets
+
+    ```Solidity
+    function update(string memory playerName, uint newScore) public {
+        players[playerName].score = newScore;
     }
     ```
 
