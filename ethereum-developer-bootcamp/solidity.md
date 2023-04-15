@@ -9,15 +9,44 @@
     -   `structs`
     -   `mappings`
 
--   Using reference types as arguments requires them to have the `memory` or `calldata` keywords, this way it will tell the Solidity compiler where the data being passed in lives
+-   Using reference types as arguments requires them to take care of the location of the data, solidity provides `memory` `storage` or `calldata`
 
-    ```Solidity
-    string name;
+    -   `memory` temporary data
 
-    function addString(string memory _name) public {
-        name = _name;
-    }
-    ```
+        ```Solidity
+        string name;
+
+        function addString(string memory _name) public {
+            name = _name;
+        }
+        ```
+
+    -   `calldata` external argument data
+
+        ```Solidity
+        contract Contract {
+            function sum(uint[] calldata arr) external pure returns(uint total) {
+                total = 0;
+                for (uint i = 0; i < arr.length; i++) {
+                    total += arr[i];
+                }
+            }
+        }
+        ```
+
+    -   `storage` persistent data
+
+        ```Solidity
+        contract Contract {
+            uint[3] numbers = [1,2,3];
+
+            function modify() external {
+                uint[3] storage storageArray = numbers;
+                storageArray[0] = 4; // will modify numbers
+                // references point to the same spot in memory
+            }
+        }
+        ```
 
 ### Mappings
 
@@ -123,6 +152,26 @@
 -   Arrays are collections of elements identified by their index
     -   Fixed size array: Number of elements defined when it’s declared
     -   Dynamic size array: Size changes during runtime
+        -   After initialization, memory arrays cannot be resized even if they're declared as dynamic arrays
+            ```Solidity
+            contract Contract {
+                function filterEven(uint[] calldata arr) external pure returns(uint[] memory){
+                    uint evens = 0;
+                    for (uint i = 0; i < arr.length; i++) {
+                        if (arr[i] % 2 == 0) evens++;
+                    }
+                    uint[] memory filtered = new uint[](evens);
+                    uint j = 0;
+                    for (uint i = 0; i < arr.length; i++) {
+                        if (arr[i] % 2 == 0) {
+                            filtered[j] = arr[i];
+                            j++;
+                        }
+                    }
+                    return filtered;
+                }
+            }
+            ```
 -   Storage arrays
 
     -   Typically declared as a state variable, and can be fixed or dynamic
@@ -141,6 +190,7 @@
         -   `.push()` add element to the end
         -   `.pop()` removes the last element
 -   Looping is not recommended since is very costly
+-
 
 ### Structs
 
@@ -242,3 +292,11 @@ interface Game {
 ### Further reading on Events
 
 -   [Understanding Logs: Deep Dive into `eth_getLogs`](https://docs.alchemy.com/docs/deep-dive-into-eth_getlogs)
+
+## Loops
+
+-   Even though it’s not recommended using them, it’s possible
+
+    ```Soliity
+    for(uint i = 0; i < 10; i++) {}
+    ```
