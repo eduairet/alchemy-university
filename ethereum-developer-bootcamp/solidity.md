@@ -221,11 +221,54 @@
     }
     ```
 
+-   Structs can be initialized in several ways
+
+    ```Solidity
+    enum Directions { Up, Down, Left, Right }
+
+    struct Hero {
+        Directions facing;
+        uint health;
+        bool inAir;
+    }
+
+    // Values in the same order
+    Hero hero = Hero(Directions.Up, 100, true);
+
+    // Named properties
+    Hero hero = Hero({
+        facing: Directions.Up,
+        health: 100,
+        inAir: true
+    });
+    ```
+
 -   Structs values can be modified by accessing their keys using square brackets
 
     ```Solidity
     function update(string memory playerName, uint newScore) public {
         players[playerName].score = newScore;
+    }
+    ```
+
+-   Strucs can be passed as argumemts with the following configuration
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity 0.8.4;
+    pragma experimental ABIEncoderV2;
+
+    contract Contract {
+        enum Choices { Yes, No }
+
+        struct Vote {
+            Choices choice;
+            address voter;
+        }
+
+        function createVote(Choices choice) external view returns(Vote memory vote) {
+            vote = Vote(choice, msg.sender);
+        }
     }
     ```
 
