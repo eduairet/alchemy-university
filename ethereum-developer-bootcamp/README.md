@@ -21,6 +21,7 @@
 17. [Hardhat](./hardhat.md)
 18. [Address Interactions](./address-interactions.md)
 19. [Solidity](./solidity.md)
-20. [Contract Examples](./contract-examples.md)
+20. [Solidity Core](./solidity-core.md)
+21. [Contract Examples](./contract-examples.md)
 
 [^1]: Images from Alchemy
