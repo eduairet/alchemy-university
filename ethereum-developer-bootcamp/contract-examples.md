@@ -95,3 +95,134 @@ contract Contract {
 	}
 }
 ```
+
+## Party
+
+```Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+contract Party {
+    uint public cover;
+    address[] public guests;
+
+    event NewGuest(address indexed Guest, uint indexed Cover);
+    event VenuePaid(address indexed Venue, uint indexed Bill);
+
+	constructor(uint _cover) {
+        cover = _cover;
+    }
+
+    function rsvp() external payable {
+        bool registered = false;
+        for (uint i=0; i<guests.length; i++) {
+            if (guests[i] == msg.sender) {
+                registered = true;
+                break;
+            }
+        }
+        require(!registered, "Already registered!");
+        require(msg.value == cover, "Please pay the cover's exact amount");
+        guests.push(msg.sender);
+        emit NewGuest(msg.sender, msg.value);
+    }
+
+    function payBill(address payable venue, uint bill) external {
+        require(address(this).balance >= bill, "The contract doesn't have enough money to pay the bill");
+        (bool sent, ) = venue.call{value: bill}("");
+        require(sent, "Payment failed");
+        if (address(this).balance > guests.length) {
+            uint share = address(this).balance / guests.length;
+            for (uint i=0; i<guests.length; i++) {
+                (bool shareSent, ) = payable(guests[i]).call{value: share}("");
+                require(shareSent, "Unable to pay the remai");
+            }
+        }
+        emit VenuePaid(venue, bill);
+    }
+}
+```
+
+## Dead Man's Switch
+
+```Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.4;
+
+contract Switch {
+    address owner;
+    address recipient;
+    uint inactivity;
+
+    constructor(address _recipient) payable {
+        owner = msg.sender;
+        recipient = _recipient;
+        inactivity = block.timestamp;
+    }
+
+    function withdraw() external isRecipient {
+        require(
+            block.timestamp - inactivity >= 52 weeks,
+            "Not more than 52 weeks of inactivity"
+        );
+        uint balance = address(this).balance;
+        (bool sent, ) = recipient.call{value: balance}("");
+        require(sent, "Couldn't withdraw funds");
+    }
+
+    function ping() external isOwner{
+        inactivity = block.timestamp;
+    }
+
+    modifier isOwner {
+        require(msg.sender == owner, "Not the owner");
+        _;
+    }
+
+    modifier isRecipient {
+        require(msg.sender == recipient, "Not the recipient");
+        _;
+    }
+}
+```
+
+## Hackathon Winner
+
+```Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+contract Hackathon {
+    struct Project {
+        string title;
+        uint[] ratings;
+    }
+
+    Project[] projects;
+
+    function newProject(string calldata _title) external {
+        // creates a new project with a title and an empty ratings array
+        projects.push(Project(_title, new uint[](0)));
+    }
+
+    function rate(uint _idx, uint _rating) external {
+        // rates a project by its index
+        projects[_idx].ratings.push(_rating);
+    }
+
+    function findWinner() external view returns(Project memory winner) {
+        (uint maxi, uint maxavg) = (0, 0);
+        for (uint i=0; i<projects.length; i++) {
+            uint avg = 0;
+            for (uint j=0; j<projects[i].ratings.length; j++) {
+                avg += projects[i].ratings[j];
+            }
+            avg = avg / projects[i].ratings.length;
+            if (avg > maxavg) {
+                (maxi, maxavg) = (i, avg);
+            }
+        }
+        winner = projects[maxi];
+    }
+}
+```
