@@ -268,4 +268,73 @@
 
 ### [OpenZeppelin](https://www.openzeppelin.com)
 
--   A company that produces industry-standard smart contracts (stress-tested and audited)
+-   A company that produces industry-standard smart contracts (stress-tested and audited) that can be inherited in our contracts
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.9;
+
+    import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+    contract MyToken is ERC20 {
+        constructor() ERC20("MyToken", "MTK") {}
+    }
+    ```
+
+## [ERC-20](https://ethereum.org/en/developers/tutorials/understand-the-erc-20-token-smart-contract/)
+
+-   Is a standard that represents a fungible asset like:
+    -   Shares in a company
+    -   Reward system points
+    -   Voting rights
+    -   Cryptocurrency
+-   It allows to tokenize basically anything and share a compatible ecosystem
+-   ERC-20 smart contract
+
+    -   Tracks owners of ERC-20 tokens with a `mapping`
+        ```Solidity
+        contract Token {
+            mapping(address => uint) public balances;
+        }
+        ```
+    -   It has a common token Interface to allow interoperability between DApps (remember DRY and inheritance)
+    -   Basic requirements:
+
+        -   `name` `symbol` `decimals` are all optional fields
+        -   `totalSupply` defines the current circulating supply of tokens
+        -   `balanceOf` balance of a particular user
+        -   `transfer` send tokens between accounts
+        -   `approve` `transferFrom` `allowance` methods for other contracts to move your funds (like [Uniswap](https://app.uniswap.org))
+
+            ```Solidity
+            pragma solidity 0.8.4;
+
+            interface IERC20 {
+
+                function totalSupply() external view returns (uint256);
+                function balanceOf(address account) external view returns (uint256);
+                function allowance(address owner, address spender) external view returns (uint256);
+
+                function transfer(address recipient, uint256 amount) external returns (bool);
+                function approve(address spender, uint256 amount) external returns (bool);
+                function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+
+
+                event Transfer(address indexed from, address indexed to, uint256 value);
+                event Approval(address indexed owner, address indexed spender, uint256 value);
+            }
+
+            contract MyContract is IERC20 {
+                // The contract is ERC-20 compatible!
+            }
+            ```
+
+-   ERC-20 Data Structures
+
+    1. `balances` - `mapping` of token balances by owner
+    2. `allowances` - `mapping` of allowances/delegate spending - indicates the balance that a spender address can use (like [Aave](https://app.aave.com))
+
+-   ERC-20 Methods
+    -   `transfer` - Method to send tokens between accounts
+    -   `approve-transferFrom` - Third party transfer (like an exchange)
+-   [ERC-20 in OpenZeppelin](https://docs.openzeppelin.com/contracts/3.x/erc20)
