@@ -191,6 +191,16 @@
 
     -   Contracts should follow a specific order while inheriting, starting with the base contract, to the most derived
 
+        ```Solidity
+        // SPDX-License-Identifier: GPL-3.0
+        pragma solidity >=0.4.0 <0.8.0;
+
+        contract X {}
+        contract A is X {}
+        // This will not compile
+        contract C is A, X {}
+        ```
+
 -   Check this example for [multiple inheritance](https://solidity-by-example.org/inheritance/)
 
 -   Besides inheritance Solidity supports other OOP concepts:

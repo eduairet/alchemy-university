@@ -226,3 +226,46 @@ contract Hackathon {
     }
 }
 ```
+
+## Ownable and Transferable
+
+-   `BaseContracts.sol`
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity 0.8.4;
+
+    contract Ownable {
+        address public owner;
+        constructor() {
+            owner = msg.sender;
+        }
+        modifier onlyOwner {
+            require(owner == msg.sender, "Not the owner");
+            _;
+        }
+    }
+
+    contract Transferable is Ownable {
+        function transfer(address newOwner) external virtual onlyOwner {
+            owner = newOwner;
+        }
+    }
+    ```
+
+-   `Collectible.sol`
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity 0.8.4;
+
+    import "./BaseContracts.sol";
+
+    contract Collectible is Ownable, Transferable {
+        uint public price;
+
+        function markPrice(uint _price) external onlyOwner {
+            price = _price;
+        }
+    }
+    ```
