@@ -126,7 +126,7 @@ modifier someFuncModifier {
 
     -   When using these kind of actions there's a chance that something get's wrong, if we're sending wrong calldata to other contrat this will call it's fallback function if there's one
 
--   If you don't have acces to the contract where you're calling the function you can use an interface to give solidity enough information to perform the call
+-   If you don't have acces to the contract where you're calling the function you can use an interface (functions you can access from the outside, like an API, or the UI of a website) to give solidity enough information to perform the call
 
     ```Solidity
     interface B {

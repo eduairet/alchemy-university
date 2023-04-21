@@ -283,7 +283,7 @@
 
 ## [ERC-20](https://ethereum.org/en/developers/tutorials/understand-the-erc-20-token-smart-contract/)
 
--   Is a standard that represents a fungible asset like:
+-   Is a standard proposed in the [EIP-20](https://eips.ethereum.org/EIPS/eip-20) that represents a fungible asset like:
     -   Shares in a company
     -   Reward system points
     -   Voting rights
@@ -335,6 +335,13 @@
     2. `allowances` - `mapping` of allowances/delegate spending - indicates the balance that a spender address can use (like [Aave](https://app.aave.com))
 
 -   ERC-20 Methods
+
     -   `transfer` - Method to send tokens between accounts
     -   `approve-transferFrom` - Third party transfer (like an exchange)
+    -   `mint` - Create new tokens
+
+-   Technical properties
+
+    -   `decimals` - by default ERC-20 tokens have 18 decimals and can be modified
+
 -   [ERC-20 in OpenZeppelin](https://docs.openzeppelin.com/contracts/3.x/erc20)

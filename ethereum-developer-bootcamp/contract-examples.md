@@ -1,5 +1,7 @@
 # Contract Examples
 
+-   These examples just show the logic behind the contract and are not meant to be used in mainnet, you should use audited contracts for real life projects, especially if you're handling real money from other people
+
 ## Escrow
 
 -   Buyer seller contract where an escrow holds the funds until all the requirements are satisfied
@@ -269,3 +271,39 @@ contract Hackathon {
         }
     }
     ```
+
+## ERC-20
+
+```Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.4;
+
+contract Token {
+    uint public totalSupply;
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+    mapping(address => uint) balances;
+
+    event Transfer(address From, address To, uint Value);
+
+    constructor() {
+        totalSupply = 1000 * (10**18);
+        balances[msg.sender] = totalSupply;
+        name = "DEVS2RIOS";
+        symbol = "D2R";
+        decimals = 18;
+    }
+
+    function balanceOf(address user) external view returns(uint) {
+        return balances[user];
+    }
+
+    function transfer(address to, uint value) public {
+        require(balances[msg.sender] >= value, "Not enough funds");
+        balances[msg.sender] -= value;
+        balances[to] += value;
+        emit Transfer(msg.sender, to, value);
+    }
+}
+```
