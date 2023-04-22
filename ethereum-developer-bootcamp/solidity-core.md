@@ -338,6 +338,20 @@
 
     -   `transfer` - Method to send tokens between accounts
     -   `approve-transferFrom` - Third party transfer (like an exchange)
+
+        -   `approve` - Give an smart contract allowness to transfer your token funds
+
+            ```Solidity
+            function approve(address spender, uint256 value) public returns (bool success) {
+                allowed[msg.sender][spender] = value;
+                emit Approval(msg.sender, spender, value);
+                return true;
+            }
+            ```
+
+        -   `Spender` will now be able to use the funds allowed by the user using the `transferFrom()` function from the ERC-20 smart contract
+            -   When you lend or borrow money to AAVEE the contract basically does this, you approve it to use your tokens and it increases the yield or liquidates your balance
+
     -   `mint` - Create new tokens
 
 -   Technical properties
@@ -345,3 +359,28 @@
     -   `decimals` - by default ERC-20 tokens have 18 decimals and can be modified
 
 -   [ERC-20 in OpenZeppelin](https://docs.openzeppelin.com/contracts/3.x/erc20)
+-   Alchemy provide an easy way to track token transfers with [`.getAssetTransfers()`](https://docs.alchemy.com/reference/alchemy-getassettransfers), this is a more straightforward than `.getLogs()`:
+
+    ```JavaScript
+    require("dotenv").config();
+    const { Alchemy, Network } = require("alchemy-sdk");
+
+    const config = {
+        apiKey: process.env.API_KEY,
+        network: Network.ETH_MAINNET,
+    };
+
+    const alchemy = new Alchemy(config);
+
+    async function totalErc20Transfers(fromBlock, toBlock) {
+        const res = await alchemy.core.getAssetTransfers({
+            fromBlock,
+            toBlock,
+            fromAddress: "0x28c6c06298d514db089934071355e5743bf21d60",
+            category: ['erc20'],
+        });
+        return res.transfers.length;
+    }
+
+    module.exports = totalErc20Transfers;
+    ```
