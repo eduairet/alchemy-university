@@ -384,3 +384,61 @@
 
     module.exports = totalErc20Transfers;
     ```
+
+## NFTs
+
+-   Non-Fungible Token
+    -   Unique characteristics, like digital art, certificates, tickets, etc
+-   Useful to represent any type of ownership
+-   Standards
+    -   ERC-721: Unique items
+    -   ERC-.1155: Limited editions
+-   Data (like images, strings, etc) is stored offline because it’s expensive to store data on the blockchain, [OpenSea provides metadata standards to follow](https://docs.opensea.io/docs/metadata-standards)
+-   Data is usually stored in a distributed peer-to-peer storage networks like IPFS, which uses content addressing to ensure its decentralization
+
+    -   Hash pointing to a resource (CID)
+        -   The hash derives from the data itself
+        -   Content Identifier (CID)
+            -   Has a hash and a codec to interpret the data
+    -   The main advantage of these kind of storage is that the chances that your resource is taken down are higher than in centralized networks
+
+-   Check the following [example](https://github.com/eduairet/mint-nft)
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.9;
+
+    import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+    import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+    import "@openzeppelin/contracts/access/Ownable.sol";
+    import "@openzeppelin/contracts/utils/Counters.sol";
+
+    contract NftEat is ERC721, ERC721URIStorage, Ownable {
+        using Counters for Counters.Counter;
+
+        Counters.Counter private _tokenIdCounter;
+
+        constructor() ERC721("NftEat", "NEAT") {}
+
+        function safeMint(address to, string memory uri) public onlyOwner {
+            uint256 tokenId = _tokenIdCounter.current();
+            _tokenIdCounter.increment();
+            _safeMint(to, tokenId);
+            _setTokenURI(tokenId, uri);
+        }
+
+        // The following functions are overrides required by Solidity.
+
+        function _burn(
+            uint256 tokenId
+        ) internal override(ERC721, ERC721URIStorage) {
+            super._burn(tokenId);
+        }
+
+        function tokenURI(
+            uint256 tokenId
+        ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+            return super.tokenURI(tokenId);
+        }
+    }
+    ```
