@@ -125,3 +125,5 @@
     -   This kind of behavior is optimal for upgrades and gas savings
         -   Minimal Proxy: Save on Gas by deploying one implementation and delegating to it
         -   Upgrade Implementation: Improvements on a previous contract
+    -   It’s recommended to always use battle tested contracts in real life projects, check [OpenZeppelin’s](https://docs.openzeppelin.com/upgrades-plugins/1.x/proxies) Proxy Upgrade Pattern
+    -   Check this [example](https://github.com/eduairet/proxy-example) and the [EIP-1967](https://eips.ethereum.org/EIPS/eip-1967) for a practical understanding
