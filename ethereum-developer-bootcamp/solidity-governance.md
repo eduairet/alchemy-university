@@ -4,6 +4,10 @@
 
 -   A storage slot is the place where some value is stored
 -   Variables are stored anywhere between `0x0 0xffff...`
+-   Empty slots return `0`
+-   Endian-ness in Ethereum
+    -   `Big-endian` (last byte of binary representation of data type is stored first `———>`) used for bytes and string types
+    -   `Little-endian` (first byte of binary representation of data type is stored first `<———`) used for every other type of variable
 -   Even if a variable doesn’t have the `public` keyword we can check its position in storage, a handful way to do it is by using the `eth_getStorageAt`
 -   Value types can be found by it’s storage slot `0x1` and reference types have a more complex storage , for example mappings store all of their entries with the following formula `keccak256(key + baseSlot)`
 
@@ -84,4 +88,5 @@
             process.exit(1);
         });
     ```
-- For more complex storage check 
+
+-   For more complex storage check [`OpenZeppelin`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/StorageSlot.sol)
