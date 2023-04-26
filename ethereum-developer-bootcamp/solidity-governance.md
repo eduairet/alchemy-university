@@ -90,3 +90,38 @@
     ```
 
 -   For more complex storage check [`OpenZeppelin`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/StorageSlot.sol)
+
+### Delegatecall
+
+-   `<address>.delegatecall`
+
+    -   Similar to `call`
+
+        ```Shell
+        # Call
+
+        signedTx = { data: calldata, value: 1.0 } # sends tx to ContractA
+
+        ContractA = { msg: {sender: EOA, value: 1.0}, storage: ContractA.storage }
+
+        b.call{ value: 2.0 }(calldata) # Executes call inside ContractA calling ContractC
+
+        ContractB = { msg: { sender: ContractA, value: 2.0 }, storage: ContractB.storage }
+        ```
+
+        ```Shell
+        # Delegatecall
+
+        signedTx = { data: calldata, value: 1.0 } # sends tx to ContractA
+
+        ContractA = { msg: {sender: EOA, value: 1.0}, storage: ContractA.storage }
+
+        b.delegatecall(calldata) # Sends the same tx to ContractB with delegatecall
+
+        ContractB = { msg: { sender: EOA, value: 1.0 }, storage: ContractA.storage }
+        ```
+
+    -   If you noticed `delegatecall` will send the same transaction from contract A to B, acting like a bridge between both, this is a key behavior for proxy contracts because you use contract A storage with contract B logic
+    -   This kind of behavior is optimal for upgrades and gas savings
+        -   Minimal Proxy: Save on Gas by deploying one implementation and delegating to it
+        -   Upgrade Implementation: Improvements on a previous contract
