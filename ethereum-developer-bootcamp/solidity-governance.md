@@ -171,3 +171,17 @@ contract Example {
     }
 }
 ```
+
+## Upgradeable Smart Contracts
+
+- An upgradable contract needs the following contracts to have a secure structure
+    - Proxy contract
+        - It holds the state
+        - It’s an EIP1967 standard proxy contract
+        - Forwards transactions to the implemented contract
+    - Implementation contract
+        - Holds the logic of the contract
+        - Receives transactions from proxy contract via delegatecall
+    - ProxyAdmin contract (optional, good with multi-sigs)
+        - Links the proxy and implementation contracts
+        - Holds authority over the proxy contract (in charge of upgrades) 
