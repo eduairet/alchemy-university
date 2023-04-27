@@ -307,3 +307,42 @@ contract Token {
     }
 }
 ```
+
+## Libraries
+
+-   Prime.sol
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.4;
+
+    library Prime {
+        function dividesEvenly(uint x, uint y) public pure returns(bool) {
+            return x % y == 0;
+        }
+        function isPrime(uint x) public pure returns(bool) {
+            if (x < 2) return false;
+            for (uint i = 2; i <= x / 2; i++) {
+                if (dividesEvenly(x, i)) return false;
+            }
+            return true;
+        }
+    }
+    ```
+
+-   PrimeGame.sol
+
+    ```Solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.4;
+
+    import "./Prime.sol";
+
+    contract PrimeGame {
+        using Prime for uint;
+
+        function isWinner() external view returns(bool) {
+            return block.number.isPrime();
+        }
+    }
+    ```

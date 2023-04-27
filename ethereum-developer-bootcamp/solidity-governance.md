@@ -91,7 +91,7 @@
 
 -   For more complex storage check [`OpenZeppelin`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/StorageSlot.sol)
 
-### Delegatecall
+## Delegatecall
 
 -   `<address>.delegatecall`
 
@@ -127,3 +127,47 @@
         -   Upgrade Implementation: Improvements on a previous contract
     -   It’s recommended to always use battle tested contracts in real life projects, check [OpenZeppelin’s](https://docs.openzeppelin.com/upgrades-plugins/1.x/proxies) Proxy Upgrade Pattern
     -   Check this [example](https://github.com/eduairet/proxy-example) and the [EIP-1967](https://eips.ethereum.org/EIPS/eip-1967) for a practical understanding
+
+## Libraries
+
+-   They cannot store storage variables, they don’t have state
+-   They cannot be destroyed
+-   You can’t send them ETH
+-   Their purpose is to share reusable algorithms to avoid re-invent the wheel on every new project
+-   Good libraries are audited and battle tested and reduce the chances to get bugs in our code
+-   Their functions are commonly pulled to our contracts `bytecode`
+    -   It’s common that library functions are `pure` or `view`
+    -   If it doesn’t have the keywords mentioned in the previous point, the contract won’t compile
+
+### Deployment
+
+-   Deployed Inline
+    -   When they’re marked as `internal` they’re pulled into the smart contract `bytecode`
+    -   It’s the most common way to use them
+-   Deployed Separately
+    -   It will help to keep the contract size low
+    -   The on-chain library can be shared with other contracts
+    -   It can run code requested by another contract with `delegatecall`
+    -   When the contract needs the library to be deployed it will add a placeholder `__$ba528da1e2dc9d528a3d6faf88239359ae$__` that’ll need to be updated later with the library address
+        -   This approach requires library linking, check [hardhat docs](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers#library-linking) and [solidity docs](https://docs.soliditylang.org/en/v0.8.17/using-the-compiler.html?highlight=linking#library-linking) about this topic
+
+### Usage
+
+```Solidity
+import "./UIntFunctions.sol";
+contract Example {
+    function isEven(uint x) public pure returns(bool) {
+        return UIntFunctions.isEven(x);
+    }
+}
+```
+
+```Solidity
+import "./UIntFunctions.sol";
+contract Example {
+    using UIntFunctions for uint;
+    function isEven(uint x) public pure returns(bool) {
+        return x.isEven();
+    }
+}
+```

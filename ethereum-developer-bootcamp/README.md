@@ -23,5 +23,6 @@
 19. [Solidity](./solidity.md)
 20. [Solidity Core](./solidity-core.md)
 21. [Solidity Governance](./solidity-governance.md)
+22. [Contract Examples](./contract-examples.md)
 
 [^1]: Images from Alchemy
