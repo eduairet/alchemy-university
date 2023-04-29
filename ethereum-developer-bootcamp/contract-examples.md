@@ -346,3 +346,76 @@ contract Token {
         }
     }
     ```
+
+## Governance
+
+```Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.4;
+
+contract Voting {
+    struct Proposal {
+        address target;
+        bytes data;
+        uint yesCount;
+        uint noCount;
+    }
+
+    struct Vote {
+        bool voted;
+        bool vote;
+    }
+
+    address[] public allowedUsers;
+    Proposal[] public proposals;
+    mapping(address => mapping(uint => Vote)) votes;
+
+    event ProposalCreated(uint ProposalId);
+    event VoteCast(uint ProposalId, address Voter);
+
+    constructor(address[] memory _allowedUsers) {
+        allowedUsers = _allowedUsers;
+        allowedUsers.push(msg.sender);
+    }
+
+    function newProposal(address target, bytes memory data) external isAllowed {
+        proposals.push(Proposal(target, data, 0, 0));
+        emit ProposalCreated(proposals.length - 1);
+    }
+
+    function castVote(uint proposalId, bool vote) external isAllowed {
+        bool hasVoted = votes[msg.sender][proposalId].voted;
+        if (hasVoted) {
+            if (votes[msg.sender][proposalId].vote)
+                proposals[proposalId].yesCount--;
+            else proposals[proposalId].noCount--;
+        }
+        if (vote) proposals[proposalId].yesCount++;
+        else proposals[proposalId].noCount++;
+        if (!hasVoted) votes[msg.sender][proposalId].voted = true;
+        votes[msg.sender][proposalId].vote = vote;
+        if (threshold(proposalId)) {
+            (bool executed, ) = proposals[proposalId].target.call(proposals[proposalId].data);
+            require(executed);
+        }
+        emit VoteCast(proposalId, msg.sender);
+    }
+
+    modifier isAllowed {
+        bool allowed;
+        for (uint i = 0; i < allowedUsers.length; i++) {
+            if (msg.sender == allowedUsers[i]) {
+                allowed = true;
+                break;
+            }
+        }
+        require(allowed, "Not allowed");
+        _;
+    }
+
+    function threshold(uint proposalId) internal view returns(bool) {
+        return proposals[proposalId].yesCount == 10;
+    }
+}
+
+```
